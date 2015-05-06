@@ -1,0 +1,38 @@
+function Prew=Prematrix(w,eq)
+
+%---------------------------------------------------------------
+% Precondition the relation matrix to construct a connected matrix
+% w is the relation matrix
+% eq is the error
+% Prew is the preconditioned relation matrix
+%----------------------------------------------------------------
+[n,m]=size(w);
+ ww=[zeros(n,n),w];
+ ww(n+1:n+m,:)=[w',zeros(m,m)];
+ [Br,numBr]=Net_Branches(ww);
+ if numBr==1
+     Prew=w;
+ else
+     Prew=w;
+
+%Br(1,1) must be 1
+             
+     for i=2:numBr
+         j=2
+         while Br(j,i)<=n
+               j=j+1;
+         end
+         if j<=n+m
+          Prew(Br(1,1),Br(j,i))=eq;
+         else
+             error('the matrix is not relation matrix');
+         end
+         
+     end
+ end
+                     
+             
+             
+         
+         
+         
